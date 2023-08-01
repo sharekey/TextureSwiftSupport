@@ -8,9 +8,8 @@ Pod::Spec.new do |s|
   s.authors               = 'Sharekey'
   s.source                = { :git => 
 "https://github.com/sharekey/TextureSwiftSupport.git", :tag => s.version.to_s }
-  s.source_files          = 'Sources/*.{h,m,swift}'
+  s.source_files          = 'Sources/**/*.{h,m,swift}'
   s.public_header_files   = 'Sources/*.h'
-  s.framework             = 'Foundation'
   s.requires_arc          = true
   s.swift_versions = ['5']
 
