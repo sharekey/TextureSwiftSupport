@@ -141,14 +141,14 @@ extension ASLayoutSpec: _ASLayoutElementType {
   ///
   /// - Author: TetureSwiftSupport
   public func tss_make() -> [ASLayoutElement] {
-    [self].filter { $0.isHidden == false }
+    [self]
   }
 }
 
 extension Optional: _ASLayoutElementType where Wrapped: _ASLayoutElementType {
 
   public func tss_make() -> [ASLayoutElement] {
-    filter { $0.isHidden == false }.map { $0.tss_make() } ?? []
+    map { $0.tss_make() } ?? []
   }
 }
 
