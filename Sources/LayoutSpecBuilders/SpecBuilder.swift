@@ -133,7 +133,7 @@ extension ASDisplayNode: _ASLayoutElementType {
   ///
   /// - Author: TetureSwiftSupport
   public func tss_make() -> [ASLayoutElement] {
-    [self]
+    [self].filter { $0.isHidden == false }
   }
 }
 
@@ -141,14 +141,14 @@ extension ASLayoutSpec: _ASLayoutElementType {
   ///
   /// - Author: TetureSwiftSupport
   public func tss_make() -> [ASLayoutElement] {
-    [self]
+    [self].filter { $0.isHidden == false }
   }
 }
 
 extension Optional: _ASLayoutElementType where Wrapped: _ASLayoutElementType {
 
   public func tss_make() -> [ASLayoutElement] {
-    map { $0.tss_make() } ?? []
+    filter { $0.isHidden == false }.map { $0.tss_make() } ?? []
   }
 }
 

@@ -12,7 +12,7 @@ public struct RelativeLayout<Content>: _ASLayoutElementType where Content: _ASLa
     horizontalPosition: ASRelativeLayoutSpecPosition = .start,
     verticalPosition: ASRelativeLayoutSpecPosition = .start,
     sizingOption: ASRelativeLayoutSpecSizingOption = .minimumSize,
-    content: () -> Content
+    @ASLayoutSpecBuilder content: () -> Content
   ) {
     self.content = content()
     self.horizontalPosition = horizontalPosition
