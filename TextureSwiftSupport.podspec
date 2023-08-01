@@ -1,18 +1,21 @@
-Pod::Spec.new do |s|
-  s.name                  = "TextureSwiftSupport"
-  s.version               = "1.0.1"
-  s.summary               = "TextureSwiftSupport"
-  s.homepage              = "https://github.com/sharekey/TextureSwiftSupport"
-  s.license               = { :type => 'MIT', :file => 'LICENSE' }
-  s.platform              = :ios, '13.0'
-  s.authors               = 'Sharekey'
-  s.source                = { :git => 
-"https://github.com/sharekey/TextureSwiftSupport.git", :tag => s.version.to_s }
+Pod::Spec.new do |spec|
+  spec.name = "TextureSwiftSupport"
+  spec.version = "3.19.0"
+  spec.summary = "A tool kit for Texture"
+  spec.description = <<-DESC
+  A library that gains Texture more power in Swift.
+                   DESC
 
-  s.requires_arc          = true
+  spec.homepage = "https://github.com/TextureCommunity/TextureSwiftSupport"
+  spec.license = "MIT"
+  spec.author = { "Muukii" => "muukii.app@gmail.com" }
+  spec.social_media_url = "https://twitter.com/muukii_app"
+  spec.platform = :ios, "11.0"
+  spec.source = { :git => "https://github.com/TextureCommunity/TextureSwiftSupport.git", :tag => "#{spec.version}" }
 
-spec.swift_versions = ["5.1"]
+  spec.swift_versions = ["5.6"]
   spec.dependency "Texture/Core", ">= 3"
+  spec.weak_frameworks = ["Combine", "SwiftUI"]
 
   spec.default_subspecs = ["LayoutSpecBuilders", "Components", "Extensions", "Experiments"]
 
@@ -33,5 +36,4 @@ spec.swift_versions = ["5.1"]
   spec.subspec "Experiments" do |ss|
     ss.source_files = "Sources/Experiments/**/*.swift"
   end
-
 end
