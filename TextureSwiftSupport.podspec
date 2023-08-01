@@ -10,14 +10,28 @@ Pod::Spec.new do |s|
 "https://github.com/sharekey/TextureSwiftSupport.git", :tag => s.version.to_s }
 
   s.requires_arc          = true
-  s.swift_versions = ['5']
-  s.module_name  = 'TextureSwiftSupport'
-  s.header_dir   = 'TextureSwiftSupport'
 
-  s.source_files          = 'Sources/**/*.{h,m,swift}'
-  s.public_header_files   = 'Sources/*.h'
+spec.swift_versions = ["5.1"]
+  spec.dependency "Texture/Core", ">= 3"
 
-  s.dependency 'https://github.com/TextureGroup/Texture.git'
-  s.dependency 'https://github.com/FluidGroup/Descriptors.git'
+  spec.default_subspecs = ["LayoutSpecBuilders", "Components", "Extensions", "Experiments"]
+
+  spec.subspec "LayoutSpecBuilders" do |ss|
+    ss.source_files = "Sources/LayoutSpecBuilders/**/*.swift"
+  end
+
+  spec.subspec "Components" do |ss|
+    ss.source_files = "Sources/Components/**/*.swift"
+    ss.dependency "TextureSwiftSupport/LayoutSpecBuilders"
+    ss.dependency "Descriptors", ">= 0.2.1"
+  end
+
+  spec.subspec "Extensions" do |ss|
+    ss.source_files = "Sources/Extensions/**/*.swift"
+  end
+
+  spec.subspec "Experiments" do |ss|
+    ss.source_files = "Sources/Experiments/**/*.swift"
+  end
 
 end
