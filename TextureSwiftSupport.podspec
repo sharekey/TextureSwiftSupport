@@ -16,4 +16,8 @@ Pod::Spec.new do |s|
 
   s.source_files          = 'Sources/**/*.{h,m,swift}'
   s.public_header_files   = 'Sources/*.h'
+
+  s.dependency = 'https://github.com/TextureGroup/Texture.git'
+  s.dependency = 'https://github.com/FluidGroup/Descriptors.git'
+
 end
