@@ -88,25 +88,41 @@ fileprivate func combineInsets(_ lhs: UIEdgeInsets, rhs: UIEdgeInsets) -> UIEdge
 // MARK: - Padding
 extension _ASLayoutElementType {
   
-  public func padding(_ padding: CGFloat) -> InsetLayout<Self> {
-    InsetLayout(insets: makeInsets(padding)) {
-      self
-    }
+  public func padding(_ padding: CGFloat) -> InsetLayout<Self>? {
+    validateNode {
+      InsetLayout(insets: makeInsets(padding)) {
+        self
+      }
+    } as? InsetLayout<Self>
   }
   
-  public func padding(_ edgeInsets: UIEdgeInsets) -> InsetLayout<Self> {
-    InsetLayout(insets: edgeInsets) {
-      self
-    }
+  public func padding(_ edgeInsets: UIEdgeInsets) -> InsetLayout<Self>? {
+    validateNode {
+      InsetLayout(insets: edgeInsets) {
+        self
+      }
+    } as? InsetLayout<Self>
   }
   
-  public func padding(_ edges: Edge.Set, _ padding: CGFloat) -> InsetLayout<Self> {
-            
-    return InsetLayout(insets: makeInsets(edges, padding)) {
-      self
-    }
+  public func padding(_ edges: Edge.Set, _ padding: CGFloat) -> InsetLayout<Self>? {
+    validateNode {
+      InsetLayout(insets: makeInsets(edges, padding)) {
+        self
+      }
+    } as? InsetLayout<Self>
   }
   
+  func validateNode(block: () -> _ASLayoutElementType) -> Any? {
+    if let element = self as? ASDisplayNode, element.isHidden {
+      return nil
+    }
+    
+    if tss_make().isEmpty {
+      return nil
+    }
+    
+    return block()
+  }
 }
 
 extension InsetLayout {
@@ -135,38 +151,49 @@ extension InsetLayout {
 
 extension _ASLayoutElementType {
   
-  public func background<Background: _ASLayoutElementType>(_ backgroundContent: Background) -> BackgroundLayout<Background, Self> {
-    BackgroundLayout(content: { self }, background: { backgroundContent })
+  public func background<Background: _ASLayoutElementType>(_ backgroundContent: Background) -> BackgroundLayout<Background, Self>? {
+    validateNode {
+      BackgroundLayout(content: { self }, background: { backgroundContent })
+    } as? BackgroundLayout<Background, Self>
   }
 
-  public func background<Background: _ASLayoutElementType>(@ASLayoutSpecBuilder _ backgroundContent: () -> Background) -> BackgroundLayout<Background, Self> {
-    BackgroundLayout(content: { self }, background: backgroundContent)
+  public func background<Background: _ASLayoutElementType>(@ASLayoutSpecBuilder _ backgroundContent: () -> Background) -> BackgroundLayout<Background, Self>? {
+    validateNode {
+      BackgroundLayout(content: { self }, background: backgroundContent)
+    } as? BackgroundLayout<Background, Self>
   }
     
-  public func overlay<Overlay: _ASLayoutElementType>(_ overlayContent: Overlay) -> OverlayLayout<Overlay, Self> {
-    OverlayLayout(content: { self }, overlay: { overlayContent })
+  public func overlay<Overlay: _ASLayoutElementType>(_ overlayContent: Overlay) -> OverlayLayout<Overlay, Self>? {
+    validateNode {
+      OverlayLayout(content: { self }, overlay: { overlayContent })
+    } as? OverlayLayout<Overlay, Self>
   }
 
-  public func overlay<Overlay: _ASLayoutElementType>(@ASLayoutSpecBuilder _ overlayContent: () -> Overlay) -> OverlayLayout<Overlay, Self> {
-    OverlayLayout(content: { self }, overlay: overlayContent)
+  public func overlay<Overlay: _ASLayoutElementType>(@ASLayoutSpecBuilder _ overlayContent: () -> Overlay) -> OverlayLayout<Overlay, Self>? {
+    validateNode {
+      OverlayLayout(content: { self }, overlay: overlayContent)
+    } as? OverlayLayout<Overlay, Self>
   }
   
   /// Make aspectRatio
   ///
   /// - Parameters:
   ///   - aspectRatio: The ratio of width to height to use for the resulting view
-  public func aspectRatio(_ aspectRatio: CGFloat) -> AspectRatioLayout<Self> {
-    AspectRatioLayout(ratio: aspectRatio, content: { self })
+  public func aspectRatio(_ aspectRatio: CGFloat) -> AspectRatioLayout<Self>? {
+    validateNode {
+      AspectRatioLayout(ratio: aspectRatio, content: { self })
+    } as? AspectRatioLayout<Self>
   }
   
   /// Make aspectRatio
   ///
   /// - Parameters:
   ///   - aspectRatio: The ratio of CGSize to use for the resulting view
-  public func aspectRatio(_ aspectRatio: CGSize) -> AspectRatioLayout<Self> {
-    AspectRatioLayout(ratio: aspectRatio, content: { self })
+  public func aspectRatio(_ aspectRatio: CGSize) -> AspectRatioLayout<Self>? {
+    validateNode {
+      AspectRatioLayout(ratio: aspectRatio, content: { self })
+    } as? AspectRatioLayout<Self>
   }
-    
 }
 
 // MARK: - Relative
@@ -178,9 +205,10 @@ extension _ASLayoutElementType {
     horizontal: ASRelativeLayoutSpecPosition,
     vertical: ASRelativeLayoutSpecPosition,
     sizingOption: ASRelativeLayoutSpecSizingOption = .minimumSize
-  ) -> RelativeLayout<Self> {
-
-    RelativeLayout(horizontalPosition: horizontal, verticalPosition: vertical, sizingOption: sizingOption, content: { self })
+  ) -> RelativeLayout<Self>? {
+    validateNode {
+      RelativeLayout(horizontalPosition: horizontal, verticalPosition: vertical, sizingOption: sizingOption, content: { self })
+    } as? RelativeLayout<Self>
   }
 }
 
@@ -336,13 +364,15 @@ public struct FlexBasisModifieer: ModifierType {
 
 extension _ASLayoutElementType {
   
-  public func modify(_ modify: @escaping (ASLayoutElement) -> Void) -> ModifiedContent<Self, Modifier> {
-    modifier(
-      .init { element in
-        modify(element)
-        return element
-      }
-    )
+  public func modify(_ modify: @escaping (ASLayoutElement) -> Void) -> ModifiedContent<Self, Modifier>? {
+    validateNode {
+      modifier(
+        Modifier.init { element in
+          modify(element)
+          return element
+        }
+      )
+    } as? ModifiedContent<Self, Modifier>
   }
   
   public func flexGrow(_ flexGlow: CGFloat) -> ModifiedContent<Self, FlexGlowModifier> {
