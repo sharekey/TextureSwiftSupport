@@ -11,7 +11,9 @@ public struct WrapperLayout<Content> : _ASLayoutElementType where Content : _ASL
   }
 
   public func tss_make() -> [ASLayoutElement] {
-    [
+    guard !child.tss_make().isEmpty else { return [] }
+
+    return [
       ASWrapperLayoutSpec(layoutElements: child.tss_make())
     ]
   }

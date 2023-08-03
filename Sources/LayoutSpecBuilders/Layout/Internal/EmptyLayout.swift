@@ -28,7 +28,7 @@ public struct EmptyLayout : _ASLayoutElementType {
   }
 
   public func tss_make() -> [ASLayoutElement] {
-    [ASLayoutSpec()]
+    []
   }
 }
 

@@ -28,6 +28,7 @@ public struct HStackLayout<Content> : _ASLayoutElementType where Content : _ASLa
   }
 
   public func tss_make() -> [ASLayoutElement] {
+    guard !children.tss_make().isEmpty else { return [] }
 
     let spec = ASStackLayoutSpec(
       direction: .horizontal,

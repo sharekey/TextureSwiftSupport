@@ -14,7 +14,9 @@ public struct AbsoluteLayout<Content> : _ASLayoutElementType where Content : _AS
   }
 
   public func tss_make() -> [ASLayoutElement] {
-    [ASAbsoluteLayoutSpec(sizing: sizing, children: children.tss_make())]
+    guard !children.tss_make().isEmpty else { return [] }
+
+    return [ASAbsoluteLayoutSpec(sizing: sizing, children: children.tss_make())]
   }
 }
 

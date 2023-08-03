@@ -12,7 +12,7 @@ public struct BackgroundLayout<BackgroundContnt, Content> : _ASLayoutElementType
   }
 
   public func tss_make() -> [ASLayoutElement] {
-    [
+    return [
       ASBackgroundLayoutSpec(
         child: content.tss_make().first ?? ASDisplayNode(),
         background: background.tss_make().first ?? ASLayoutSpec()
