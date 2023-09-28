@@ -141,7 +141,7 @@ extension ASLayoutSpec: _ASLayoutElementType {
   ///
   /// - Author: TetureSwiftSupport
   public func tss_make() -> [ASLayoutElement] {
-    [self].filter { !$0.tss_make().isEmpty }
+    [self]
   }
 }
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "TextureSwiftSupport"
-  spec.version = "3.19.5"
+  spec.version = "3.19.6"
   spec.summary = "A tool kit for Texture"
   spec.description = <<-DESC
   A library that gains Texture more power in Swift.
